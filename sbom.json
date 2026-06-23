@@ -1,0 +1,73 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "serialNumber": "urn:uuid:3f8a2c1d-9b47-4e06-a5f2-d1c8e0b73924",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-06-15T00:00:00Z",
+    "tools": [
+      {
+        "vendor": "Anthropic",
+        "name": "Claude Code",
+        "version": "1.0"
+      }
+    ],
+    "component": {
+      "type": "library",
+      "bom-ref": "PwshBearerAuth@1.0.0",
+      "name": "PwshBearerAuth",
+      "version": "1.0.0",
+      "description": "PowerShell 7 module implementing OIDC Authorization Code + PKCE flow. Stores access and refresh tokens in module-scope memory and exposes them as a Bearer header for use with Invoke-WebRequest and Invoke-RestMethod.",
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/securitystudio-io/PwshBearerAuth"
+        },
+        {
+          "type": "documentation",
+          "url": "https://github.com/securitystudio-io/PwshBearerAuth/README.md"
+        }
+      ]
+    }
+  },
+  "components": [
+    {
+      "type": "framework",
+      "bom-ref": "PowerShell@7.0.0",
+      "name": "PowerShell",
+      "version": "7.0.0",
+      "description": "Minimum required PowerShell runtime version. All cryptography (SHA-256, RandomNumberGenerator), HTTP listening (HttpListener), and HTTP requests (Invoke-RestMethod) are performed via .NET BCL types and built-in cmdlets that ship with PowerShell 7+. No PSGallery modules are required.",
+      "publisher": "Microsoft Corporation",
+      "purl": "pkg:github/PowerShell/PowerShell@v7.0.0",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/PowerShell/PowerShell"
+        },
+        {
+          "type": "license",
+          "url": "https://github.com/PowerShell/PowerShell/blob/master/LICENSE.txt"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "PwshBearerAuth@1.0.0",
+      "dependsOn": [
+        "PowerShell@7.0.0"
+      ]
+    },
+    {
+      "ref": "PowerShell@7.0.0",
+      "dependsOn": []
+    }
+  ]
+}
