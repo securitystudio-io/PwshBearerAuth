@@ -48,9 +48,16 @@ function New-State {
 function Wait-LocalCallback {
     param([int]$Port, [string]$ExpectedState, [int]$TimeoutSeconds = 120)
 
+    $ErrorActionPreference = 'Stop'
+
     $listener = [Net.HttpListener]::new()
     $listener.Prefixes.Add("http://localhost:$Port/")
-    $listener.Start()
+    try {
+        $listener.Start()
+    }
+    catch {
+        throw "Failed to bind to http://localhost:$Port/ — the port is likely still held by a previous PwshBearerAuth listener (e.g. a prior run that was cancelled or crashed). Close any other PowerShell sessions using this module, or wait a few seconds for Windows to release the socket, then retry. Original error: $($_.Exception.Message)"
+    }
 
     $deadline = [DateTime]::UtcNow.AddSeconds($TimeoutSeconds)
 
@@ -99,8 +106,8 @@ function Wait-LocalCallback {
         throw "Timed out waiting for browser callback after $TimeoutSeconds seconds."
     }
     finally {
-        $listener.Stop()
-        $listener.Close()
+        try { $listener.Stop() } catch {}
+        try { $listener.Close() } catch {}
     }
 }
 
